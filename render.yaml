@@ -29,7 +29,7 @@ services:
       - key: GROUNDING_THRESHOLD
         value: "0.58"
       - key: GROUNDING_THRESHOLD_GU
-        value: "0.45"
+        value: "0.40"
       - key: OMP_NUM_THREADS
         value: "2"
       - key: MKL_NUM_THREADS
