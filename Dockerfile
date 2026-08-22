@@ -35,6 +35,9 @@ COPY hhg-task2/src/ ./src/
 COPY hhg-task2/scripts/ ./scripts/
 COPY hhg-task2/data/ ./data/
 
+# Build multilingual index into image
+RUN python scripts/ingest_multilingual.py
+
 # Create docs directory
 RUN mkdir -p /app/docs
 

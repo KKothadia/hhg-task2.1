@@ -55,7 +55,7 @@ class Settings(BaseSettings):
         default=0.58, description="Entailment/similarity threshold for grounding check"
     )
     grounding_threshold_gu: float = Field(
-        default=0.45, description="Calibrated retrieval threshold for Gujarati evidence"
+        default=0.40, description="Calibrated retrieval threshold for Gujarati evidence"
     )
 
     model_config = {
