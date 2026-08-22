@@ -15,10 +15,13 @@ short_description: Grounded, sub-25ms multilingual voice RAG over MSMARCO-XI
 ### Speak. Trust.
 **A grounded multilingual voice interface for retrieval-based question answering over a curated knowledge base.**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-HTTPS_Active-brightgreen?style=for-the-badge&logo=googlechrome)](https://planned-controlled-alpha-expects.trycloudflare.com)
+[![Custom Domain](https://img.shields.io/badge/Custom_Domain-apicalypsevoicerag.me-blue?style=for-the-badge)](https://apicalypsevoicerag.me)
+[![Swagger Docs](https://img.shields.io/badge/Swagger_UI-FastAPI_Docs-orange?style=for-the-badge&logo=fastapi)](https://planned-controlled-alpha-expects.trycloudflare.com/docs)
 [![Tests](https://img.shields.io/badge/Tests-104%2F104%20PASS-3dff8a?style=for-the-badge&logo=pytest)](hhg-task2/docs/TESTING.md)
 [![RAG P50](https://img.shields.io/badge/RAG_P50-22_ms-0e241b?style=for-the-badge&logo=speedtest)](hhg-task2/docs/LATENCY.md)
 [![RAG P100](https://img.shields.io/badge/RAG_P100-27_ms_%3C_100-3dff8a?style=for-the-badge)](hhg-task2/docs/LATENCY.md)
-[![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20HI%20%7C%20GU-ffb020?style=for-the-badge)](hhg-task2/src/utils/language.py)
+[![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20HI%20%7C%20GU%20%7C%20Indic-ffb020?style=for-the-badge)](hhg-task2/src/utils/language.py)
 [![Corpus](https://img.shields.io/badge/MSMARCO--XI-15%2C680_Chunks-6f42c1?style=for-the-badge)](hhg-task2/data/)
 [![Track](https://img.shields.io/badge/Track-%23RAGInGoa-ff5500?style=for-the-badge)](#ragingoa)
 
@@ -26,13 +29,21 @@ short_description: Grounded, sub-25ms multilingual voice RAG over MSMARCO-XI
 
 ---
 
+## 🌐 Live Production Deployment
+
+* 🎙️ **Live Web Application (HTTPS):** [https://planned-controlled-alpha-expects.trycloudflare.com](https://planned-controlled-alpha-expects.trycloudflare.com)
+* 🌐 **Custom Domain (SSL):** [https://apicalypsevoicerag.me](https://apicalypsevoicerag.me)
+* 📖 **Interactive Swagger API Docs:** [https://planned-controlled-alpha-expects.trycloudflare.com/docs](https://planned-controlled-alpha-expects.trycloudflare.com/docs)
+* 📊 **Live Index Stats:** [https://planned-controlled-alpha-expects.trycloudflare.com/api/stats](https://planned-controlled-alpha-expects.trycloudflare.com/api/stats)
+
+---
+
 ## 🚀 Quick Navigation
 
 The complete Task #2 implementation, web application, test suite, and forensic documentation are located in [`hhg-task2/`](hhg-task2/).
 
-- **Railway Deployment Guide & Release Notes:** [`RAILWAY_DEPLOYMENT_NOTES.md`](RAILWAY_DEPLOYMENT_NOTES.md)
+- **Live Application:** [https://planned-controlled-alpha-expects.trycloudflare.com](https://planned-controlled-alpha-expects.trycloudflare.com)
 - **Executive Overview & Demo Guide:** [`hhg-task2/README.md`](hhg-task2/README.md)
-- **Live Local Server:** Run `python -m uvicorn src.api.main:app --host 127.0.0.1 --port 7860` from `hhg-task2/`
 - **Automated Test Suite:** Run `pytest tests/ -v` (**104/104 PASS**)
 
 ---
