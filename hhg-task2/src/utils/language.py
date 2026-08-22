@@ -92,29 +92,49 @@ def normalize_language(language: str | None) -> str | None:
     }.get(normalized, normalized)
 
 
-@functools.lru_cache(maxsize=128)
+@functools.lru_cache(maxsize=256)
 def detect_language(text: str) -> str:
     """
-    Fast, deterministic script-based language detector for en, hi, gu.
-    Handles mixed-script queries (e.g. 'Goa ક્યાં છે?' -> 'gu').
+    Fast, deterministic script-based language detector for all major Indic languages + English.
+    Handles mixed-script queries (e.g. 'Goa ક્યાં છે?' -> 'gu', 'Goa எங்கே உள்ளது?' -> 'ta').
     """
     if not text or not text.strip():
         return "en"
 
     # Count characters in unicode script blocks
-    gu_chars = len(re.findall(r'[\u0A80-\u0AFF]', text))
-    hi_chars = len(re.findall(r'[\u0900-\u097F]', text))
+    ta_chars = len(re.findall(r'[\u0B80-\u0BFF]', text))  # Tamil
+    te_chars = len(re.findall(r'[\u0C00-\u0C7F]', text))  # Telugu
+    kn_chars = len(re.findall(r'[\u0C80-\u0CFF]', text))  # Kannada
+    ml_chars = len(re.findall(r'[\u0D00-\u0D7F]', text))  # Malayalam
+    bn_chars = len(re.findall(r'[\u0980-\u09FF]', text))  # Bengali
+    pa_chars = len(re.findall(r'[\u0A00-\u0A7F]', text))  # Punjabi / Gurmukhi
+    gu_chars = len(re.findall(r'[\u0A80-\u0AFF]', text))  # Gujarati
+    or_chars = len(re.findall(r'[\u0B00-\u0B7F]', text))  # Odia
+    hi_chars = len(re.findall(r'[\u0900-\u097F]', text))  # Devanagari (Hindi / Marathi)
     en_chars = len(re.findall(r'[a-zA-Z]', text))
 
-    # If Gujarati script is present, classify as Gujarati
-    if gu_chars > 0 and gu_chars >= hi_chars:
-        return "gu"
-    # If Devanagari script is present, classify as Hindi
-    if hi_chars > 0 and hi_chars >= gu_chars:
-        return "hi"
-    # If Latin characters present
-    if en_chars > 0:
-        return "en"
+    counts = {
+        "ta": ta_chars,
+        "te": te_chars,
+        "kn": kn_chars,
+        "ml": ml_chars,
+        "bn": bn_chars,
+        "pa": pa_chars,
+        "gu": gu_chars,
+        "or": or_chars,
+        "hi": hi_chars,
+        "en": en_chars,
+    }
+
+    # If Devanagari is dominant, check for characteristic Marathi markers
+    if hi_chars > 0:
+        marathi_markers = ["आहे", "नाही", "कसे", "काय", "आम्ही", "नाव", "कुठे", "माझं", "झाले", "करा", "होते"]
+        if any(m in text for m in marathi_markers):
+            counts["mr"] = counts.pop("hi")
+
+    best_lang, max_count = max(counts.items(), key=lambda x: x[1])
+    if max_count > 0:
+        return best_lang
 
     return "en"
 
