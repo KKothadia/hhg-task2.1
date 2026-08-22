@@ -218,10 +218,10 @@ class RAGPipeline:
             doc_lang = top_chunk.metadata.get("language") or detect_language(top_chunk.text)
             fallback_used = top_chunk.metadata.get("fallback_used", False)
 
-            # Calibrated retrieval floor: Gujarati has a lower measured baseline
-            # in the current corpus; answerability remains mandatory.
+            # Calibrated retrieval floor: Indic languages have a calibrated baseline (0.40)
+            INDIC_LANGS = {"gu", "ta", "te", "bn", "kn", "ml", "pa", "mr", "or"}
             grounding_threshold = (
-                settings.grounding_threshold_gu if query_lang == "gu" else settings.grounding_threshold
+                settings.grounding_threshold_gu if query_lang in INDIC_LANGS else settings.grounding_threshold
             )
             if top_score < grounding_threshold:
                 logger.info("retrieval_below_semantic_threshold", top_score=round(top_score, 4), threshold=grounding_threshold, query=query[:100])
