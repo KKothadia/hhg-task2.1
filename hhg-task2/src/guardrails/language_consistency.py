@@ -53,6 +53,10 @@ class LanguageConsistencyGuardrail:
             )
             return GuardrailResult.pass_result()
 
+        # Devanagari script shared compatibility (Hindi & Marathi)
+        if q_lang in ("hi", "mr") and e_lang in ("hi", "mr"):
+            return GuardrailResult.pass_result()
+
         # If query is English and evidence is not English
         if q_lang == "en" and e_lang != "en":
             logger.info(
@@ -66,13 +70,8 @@ class LanguageConsistencyGuardrail:
                 message="No sufficiently grounded evidence in English was found in the knowledge base for this question.",
             )
 
-        # For non-English queries if fallback was used with strong grounding
-        if fallback_used and self._allow_fallback:
-            logger.info(
-                "multilingual_fallback_accepted",
-                query_language=q_lang,
-                evidence_language=e_lang,
-            )
+        # For non-English queries, allow cross-lingual Indic grounding
+        if q_lang != "en":
             return GuardrailResult.pass_result()
 
         return GuardrailResult.refuse(
