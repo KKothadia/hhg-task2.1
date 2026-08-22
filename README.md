@@ -15,11 +15,11 @@ short_description: Grounded, sub-25ms multilingual voice RAG over MSMARCO-XI
 ### Speak. Trust.
 **A grounded multilingual voice interface for retrieval-based question answering over a curated knowledge base.**
 
-[![Tests](https://img.shields.io/badge/Tests-99%2F99%20PASS-3dff8a?style=for-the-badge&logo=pytest)](hhg-task2/docs/TESTING.md)
+[![Tests](https://img.shields.io/badge/Tests-104%2F104%20PASS-3dff8a?style=for-the-badge&logo=pytest)](hhg-task2/docs/TESTING.md)
 [![RAG P50](https://img.shields.io/badge/RAG_P50-22_ms-0e241b?style=for-the-badge&logo=speedtest)](hhg-task2/docs/LATENCY.md)
 [![RAG P100](https://img.shields.io/badge/RAG_P100-27_ms_%3C_100-3dff8a?style=for-the-badge)](hhg-task2/docs/LATENCY.md)
 [![Languages](https://img.shields.io/badge/Languages-EN%20%7C%20HI%20%7C%20GU-ffb020?style=for-the-badge)](hhg-task2/src/utils/language.py)
-[![Corpus](https://img.shields.io/badge/MSMARCO--XI-15%2C679_Chunks-6f42c1?style=for-the-badge)](hhg-task2/data/)
+[![Corpus](https://img.shields.io/badge/MSMARCO--XI-15%2C680_Chunks-6f42c1?style=for-the-badge)](hhg-task2/data/)
 [![Track](https://img.shields.io/badge/Track-%23RAGInGoa-ff5500?style=for-the-badge)](#ragingoa)
 
 </div>
@@ -30,9 +30,10 @@ short_description: Grounded, sub-25ms multilingual voice RAG over MSMARCO-XI
 
 The complete Task #2 implementation, web application, test suite, and forensic documentation are located in [`hhg-task2/`](hhg-task2/).
 
+- **Railway Deployment Guide & Release Notes:** [`RAILWAY_DEPLOYMENT_NOTES.md`](RAILWAY_DEPLOYMENT_NOTES.md)
 - **Executive Overview & Demo Guide:** [`hhg-task2/README.md`](hhg-task2/README.md)
-- **Live Local Server:** Run `python -m uvicorn src.api.main:app --host 127.0.0.1 --port 8000` from `hhg-task2/`
-- **Automated Test Suite:** Run `pytest tests/ -v` (**99/99 PASS**)
+- **Live Local Server:** Run `python -m uvicorn src.api.main:app --host 127.0.0.1 --port 7860` from `hhg-task2/`
+- **Automated Test Suite:** Run `pytest tests/ -v` (**104/104 PASS**)
 
 ---
 
