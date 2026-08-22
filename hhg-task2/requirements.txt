@@ -10,7 +10,7 @@ python-multipart==0.0.9
 # --- Data & ML ---
 datasets==2.21.0
 sentence-transformers==3.0.1
-torch>=2.9.0
+torch>=2.2.0
 transformers>=4.44.0
 numpy>=1.26.4
 
