@@ -42,7 +42,7 @@ class EmbeddingService:
 
         # Optimize PyTorch CPU thread allocation for low-memory container execution
         if not torch.cuda.is_available():
-            torch.set_num_threads(2)
+            torch.set_num_threads(1)
             try:
                 torch.set_num_interop_threads(1)
             except Exception:

@@ -14,7 +14,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 COPY hhg-task2/requirements.txt .
-RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+RUN pip install --no-cache-dir --prefix=/install torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 # --- Stage 2: Runtime ---
 FROM python:3.11-slim
@@ -24,10 +25,12 @@ WORKDIR /app
 # Copy installed packages from builder
 COPY --from=builder /install /usr/local
 
-# Pre-cache HuggingFace SentenceTransformer model into image
+# Pre-cache HuggingFace SentenceTransformer model into image with lean memory footprint
 ENV HF_HOME=/root/.cache/huggingface \
-    OMP_NUM_THREADS=2 \
-    MKL_NUM_THREADS=2
+    OMP_NUM_THREADS=1 \
+    MKL_NUM_THREADS=1 \
+    OPENBLAS_NUM_THREADS=1 \
+    PYTHONUNBUFFERED=1
 RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2')"
 
 # Copy application source, scripts, and dataset
