@@ -109,6 +109,23 @@ class TestMultilingualRetrieval:
                 chunk_lang = top_chunk.get("language", "unknown")
                 assert chunk_lang in ["gu", "unknown"], f"Expected Gujarati chunk, got {chunk_lang}"
 
+    @pytest.mark.asyncio
+    async def test_gujarati_goa_location_grounded(self, pipeline):
+        """Verify Gujarati Goa location queries retrieve goa_gu_01 and produce grounded answers."""
+        queries = [
+            "ગોવા ક્યાં છે?",
+            "ગોવા ક્યાં આવેલું છે?",
+            "ગોવા ક્યાં બાજુ આવે છે?",
+        ]
+        for q in queries:
+            result = await pipeline.process_text(q, input_language="gu")
+            assert result.success is True, f"Expected success for {q}, got refused={result.refused}, reason={result.refusal_reason}"
+            assert result.refused is False
+            assert "Goa" in result.answer or "ગોવા" in result.answer
+            assert len(result.retrieved_chunks) > 0
+            assert result.retrieved_chunks[0].get("doc_id") == "goa_gu_01"
+            assert result.retrieved_chunks[0].get("language") == "gu"
+
 
 class TestLanguagePreservation:
     """Test that query language is preserved throughout pipeline."""
@@ -272,6 +289,10 @@ class TestEvidenceQualityRegression:
             ("What is integration by parts?", "en", False),
             ("What is the weather today?", "en", False),
             ("Goa ક્યાં છે?", "gu", True),
+            ("ગોવા ક્યાં છે?", "gu", True),
+            ("ગોવા ક્યાં આવેલું છે?", "gu", True),
+            ("ગોવા ક્યાં બાજુ આવે છે?", "gu", True),
+            ("Where is Goa located?", "en", True),
             ("મશીન લર્નિંગ શું છે?", "gu", True),
             ("asldkfj qwpeoiru zxmcnbv", "en", False),
             ("How do I build a warp drive?", "en", False),
