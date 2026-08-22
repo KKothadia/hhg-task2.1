@@ -35,8 +35,8 @@ COPY hhg-task2/src/ ./src/
 COPY hhg-task2/scripts/ ./scripts/
 COPY hhg-task2/data/ ./data/
 
-# Build multilingual index into image
-RUN python scripts/ingest_multilingual.py
+# Build multilingual index into image if not provided by git
+RUN if [ ! -f data/numpy_store.pkl ]; then python scripts/ingest_multilingual.py; else echo "Index data/numpy_store.pkl already exists, skipping build."; fi
 
 # Create docs directory
 RUN mkdir -p /app/docs
