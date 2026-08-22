@@ -41,12 +41,12 @@ RUN if [ ! -f data/numpy_store.pkl ]; then python scripts/ingest_multilingual.py
 # Create docs directory
 RUN mkdir -p /app/docs
 
-# Expose default Hugging Face Spaces port
-EXPOSE 7860
+# Expose default application ports (8080 for Railway, 7860 for HF Spaces)
+EXPOSE 8080 7860
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
-    CMD python -c "import os, httpx; port = os.environ.get('PORT', '7860'); r = httpx.get(f'http://localhost:{port}/health'); assert r.status_code == 200"
+    CMD python -c "import os, httpx; port = os.environ.get('PORT', '8080'); r = httpx.get(f'http://localhost:{port}/health'); assert r.status_code == 200"
 
-# Run the server with single worker and dynamic port binding (default: 7860)
-CMD ["sh", "-c", "uvicorn src.api.main:app --host 0.0.0.0 --port ${PORT:-7860} --workers 1"]
+# Run the server with single worker and dynamic port binding (default: 8080)
+CMD ["sh", "-c", "uvicorn src.api.main:app --host 0.0.0.0 --port ${PORT:-8080} --workers 1"]
